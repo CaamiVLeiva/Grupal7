@@ -148,3 +148,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # MEDIA
 MEDIA_ROOT = BASE_DIR/'media'
 MEDIA_URL = '/media/'
+
+SESSION_COOKIE_AGE = 3600  # 1 hora en segundos #Duración de la sesión
+SESSION_COOKIE_DOMAIN = "ejemplo.com" #dominio al que se asociarán las cookies de sesión
+SESSION_COOKIE_SECURE = True # Las cookies se marcan como seguras
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True #La cuenta no expira cuando se cierre el navegador
+SESSION_SAVE_EVERY_REQUEST = True #La sesión se guarda en cada solicitud.

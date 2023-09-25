@@ -14,7 +14,8 @@ urlpatterns = [
     path('hacerPedido/<int:pk>/', views.agregar_producto, name='hacer-pedido'),
     path('verPedido/<int:pk>/', views.verPedido, name='ver-pedido'),
     path('cambiarEstadoPedido/<int:pk>/', views.cambioEstadoPedido, name='cambiarEstadoPedido'),
-    path('tomar_pedido/', views.tomar_pedido, name='tomar-pedidos')
+    path('tomar_pedido/', views.tomar_pedido, name='tomar-pedidos'),
+    path('session-settings/', views.session_settings, name='session-settings'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -19,7 +19,8 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from .models import Producto, Pedido
 
 from django.db.models import Q
-
+#Session
+from django.conf import settings
 
 def inicio(request):
     return render(request, 'inicio.html')
@@ -46,28 +47,22 @@ def registro(request):
     )
 
 def custom_login(request):
-
     if request.user.is_authenticated:
         return redirect('inicio')
-    
     if request.method == "POST":
         form = AuthenticationForm(request=request, data=request.POST)
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
             user = authenticate(request, username=username, password=password)
-            
             if user:
-                
                 login(request, user)
                 messages.success(request, f'Bienvenido {user}')
                 return redirect('inicio')
-            
         else:
             for error in list(form.errors.values()):
                 messages.error(request, error)
     form = AuthenticationForm()
-
     return render(
         request=request,
         template_name='login.html',
@@ -161,4 +156,14 @@ def tomar_pedido(request):
     else:
         form = TomarPedidoForm()
     
-    return render(request, 'tomar_pedido.html', {'form':form})
+    return render(request, 'tomar_pedido.html', {'form':form, 'pedidos': pedidos})
+
+def session_settings(request):
+    context = {
+        'SESSION_COOKIE_AGE': settings.SESSION_COOKIE_AGE,
+        'SESSION_COOKIE_DOMAIN': settings.SESSION_COOKIE_DOMAIN,
+        'SESSION_COOKIE_SECURE': settings.SESSION_COOKIE_SECURE,
+        'SESSION_EXPIRE_AT_BROWSER_CLOSE': settings.SESSION_EXPIRE_AT_BROWSER_CLOSE,
+        'SESSION_SAVE_EVERY_REQUEST': settings.SESSION_SAVE_EVERY_REQUEST,
+    }
+    return render(request, 'session_settings.html', context)
